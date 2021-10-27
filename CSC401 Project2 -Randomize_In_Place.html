@@ -1,0 +1,287 @@
+<html>
+    <head>
+    <title>Randomize-In-Place</title>
+    <style type="text/css"><!-- 
+    /* internal styles */
+    body {
+    font-family: "Trebuchet MS", Skia, "Lucida Sans Unicode", sans-serif;
+    font-size: 16px;
+    margin: 2.5em auto 5em 5% ;
+    width: 90%; 
+    }
+
+    #header {
+    margin: 3em 0 ;
+    border: 3px #369;
+    border-style: solid solid ;
+    padding: 0em  2em 0 ;
+    text-align: center ;
+    }
+
+    #header .title {
+    font-size: 1.6em ;
+    margin-bottom: 0 ;
+    }
+
+    #footer {
+    margin: 3em 0 ;
+    /*border: 2px #036;*/
+    border: 3px #369;
+    border-style: solid solid ;
+    padding: .7em ;
+    
+    }
+
+    #footer img { 
+    border: none ;
+    }
+
+    .section {
+    font-size: 1.1em ;
+    font-weight: bold ;
+    }
+
+    a { 
+    color: #339 ; 
+    text-decoration: none ;
+    }
+
+    .mybox {
+    border: 3px #369;
+    border-style: solid solid ;
+    padding: 1.5em ;
+    margin: 2em 0 ;
+    }
+
+    .prebox {
+    padding: 1em ;
+    background: #ffc; 
+    overflow: scroll; 
+    }
+
+    .arraytext {
+    float: left; 
+    text-align: center; 
+    width: 100%; 
+    margin-top: .5em ;
+    font-size: 1.5em ;
+    }
+
+    .arraycell {
+        float: left;
+        width: 3em ;
+        height: 3em ;
+        background: #999 ;
+    }
+
+    --></style>
+
+    <script type="text/javascript">
+
+			
+    var cb_color  = "#ffc" ; //code background
+    var cbh_color = "#faa" ; //code background highlight
+
+    var algStep_g ;
+
+
+    function createArray(n) {
+    var i ;
+    a = new Array(n) ;
+    for ( i=0; i<n; i++ ) a[i] = i ;
+    return a ;
+    }
+
+    function stepZero() { 
+        initElement() ; 
+    }
+
+    function setElementValue(elementId, value) {
+        if ( document.getElementById(elementId).innerText!=undefined ) {
+            document.getElementById(elementId).innerText = value ;
+        } else {
+            document.getElementById(elementId).textContent = value ;
+        }
+    }
+
+    function initElement() {
+        a = createArray(16);
+        var i ;
+        for ( i=1; i<17;i++ ) {
+            document.getElementById('n'+i).style.background = "#ccf" ;
+            document.getElementById('n'+i).style.color = "black" ;
+            setElementValue('array'+i, a[i-1]) ;
+        }
+
+        algStep_g = 0 ;
+
+        setCodeColors(0) ;
+    }
+
+    function setColorofCell(cell, color) {
+        document.getElementById('n'+cell).style.background = color ;
+    }
+
+    function Random(i, n){
+        return (Math.floor( Math.random() *(n-i +1) + i));
+    }
+
+    function redrawArray() {
+
+        var i ;
+
+        for ( i=0; i<=algStep_g; i++ ) {
+            setColorofCell(i+1,"#faa") ;
+        }
+        
+        for ( i=1; i<17; i++ ) {
+            setElementValue('array'+i, a[i-1]) ;
+        }
+    }
+
+    function algStep() {
+        if(algStep_g == 15){
+            redrawArray();
+            unsetCodeColors();
+            return;
+        }
+        setCodeColors(1);
+
+        if(algStep_g == 14){
+            setCodeColors(2);
+            swap(14,15);
+            algStep_g++;
+            return;
+        }
+
+        var swapLocation = Random(algStep_g, 15);
+        swap(algStep_g, swapLocation);
+
+        algStep_g++;
+        
+    }
+
+    function swap(loc1, loc2){
+        var temp = a[loc2];
+        
+        a[loc2] = a[loc1];
+        a[loc1] = temp;
+        setCodeColors(2);
+        redrawArray();
+
+    }
+
+    function setCodeColors(i) {
+        document.getElementById("codeloc0").style.background = cb_color ;
+        document.getElementById("codeloc1").style.background = cb_color ;
+        document.getElementById("codeloc2").style.background = cb_color ;
+        document.getElementById("codeloc"+i).style.background = cbh_color ;
+    }
+
+    function unsetCodeColors(){
+        document.getElementById("codeloc0").style.background = cb_color ;
+        document.getElementById("codeloc1").style.background = cb_color ;
+        document.getElementById("codeloc2").style.background = cb_color ;
+    }
+    </script>
+
+    </head>
+    <body onload="initElement();">
+        
+        <div id="header">
+            <h1>Randomize-In-Place</h1>
+        </div>
+        <p>This is an animation of the Randomize-In-Place algorithm.</p>
+        <div class="mybox">
+        <div id="array">
+        <div class="arraycell" id="n1">
+        <div id="array1" class="arraytext"></div>
+        </div>
+        <div class="arraycell" id="n2">
+        <div id="array2" class="arraytext"></div>
+        </div>
+        <div class="arraycell" id="n3">
+        <div id="array3" class="arraytext"></div>
+        </div>
+        <div class="arraycell" id="n4">
+        <div id="array4" class="arraytext"></div>
+        </div>
+        <div class="arraycell" id="n5">
+        <div id="array5" class="arraytext"></div>
+        </div>
+        <div class="arraycell" id="n6">
+        <div id="array6" class="arraytext"></div>
+        </div>
+        <div class="arraycell" id="n7">
+        <div id="array7" class="arraytext"></div>
+        </div>
+        <div class="arraycell" id="n8">
+        <div id="array8" class="arraytext"></div>
+        </div>
+        <div class="arraycell" id="n9">
+        <div id="array9" class="arraytext"></div>
+        </div>
+        <div class="arraycell" id="n10">
+        <div id="array10" class="arraytext"></div>
+        </div>
+        <div class="arraycell" id="n11">
+        <div id="array11" class="arraytext"></div>
+        </div>
+        <div class="arraycell" id="n12">
+        <div id="array12" class="arraytext"></div>
+        </div>
+        <div class="arraycell" id="n13">
+        <div id="array13" class="arraytext"></div>
+        </div>
+        <div class="arraycell" id="n14">
+        <div id="array14" class="arraytext"></div>
+        </div>
+        <div class="arraycell" id="n15">
+        <div id="array15" class="arraytext"></div>
+        </div>
+        <div class="arraycell" id="n16">
+        <div id="array16" class="arraytext"></div>
+        </div>
+        </div>
+
+        <!-- left margin -->
+        <div style="clear: left;"></div>
+
+        <p>
+        <div class="prebox" style="width:30em;">
+        PSEUDOCODE FOR Randomize In-Place (taken from CLR)
+        <br>
+        <br>
+        Goal: Re-order the entire array randomly.
+        <br>
+        <br>
+        Randomize-In-Place(A)
+        <br>
+        <br>
+        <span id="codeloc0">
+        n = A.length
+
+        </span>
+        <br>
+        <span id="codeloc1">
+        for i = 1 to n
+        </span>
+        <br>
+        <span id="codeloc2">
+        &nbsp;&nbsp;swap A[i] with A[Random(i,n)]
+        </span>
+        <br>
+
+        </div>
+
+        <table>
+            <tr>
+            <td style="border: solid red 2px; background: #eef;"
+            onclick="stepZero()">&nbsp;Restart&nbsp;
+            <td style="border: solid red 2px; background: #fee;"
+            onclick="algStep()">&nbsp;Next&nbsp;
+        </table>
+
+        </div>
+    </body>
+</html>
